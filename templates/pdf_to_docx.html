@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to DOCX Converter</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <button class="header-button" onclick="window.location.href='/';">File Converter</button>
+        <h1>PDF to DOCX Converter</h1>
+    </header>
+
+    <main class="content">
+        <div class="file-upload-container">
+            <form id="uploadForm" action="/convert-pdf-to-docx" method="post" enctype="multipart/form-data">
+                <div id="fileDropZone" class="file-drop-zone" data-allowed-extensions=".pdf">
+                    <p>Перетащите файлы сюда или нажмите, чтобы выбрать</p>
+                    <input type="file" id="fileInput" name="files" multiple hidden data-allowed-extensions=".pdf">
+                </div>
+                <ul id="fileList" class="file-list"></ul>
+            </form>          
+        </div>
+
+        <div class="side-panel" id="actionPanel">
+            <button type="submit" form="uploadForm" id="convertButton" style="display:none;">Convert to DOCX</button>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 File Converter</p>
+    </footer>
+
+    <script src="/static/file-handler.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Your Converted Files</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <button class="header-button" onclick="window.location.href='/';">File Converter</button>
+        <h1>Your File Conversion is Complete!</h1>
+    </header>
+    <main class="container">
+        <div class="center-content">
+            <p>Click the button below to download your files:</p>
+            <form action="/download-all" method="get">
+                <button type="submit" class="download-button">
+                    Download
+                </button>
+            </form>
+        </div>
+    </main>
+    <footer class="main-footer">
+        <p>&copy; 2025 File Converter</p>
+    </footer>
+</body>
+</html>
