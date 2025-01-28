@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Конвертация PDF в DOCX | Format Converter</title>
+    <title>Конвертация JPG в PNG | Format Converter</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header class="main-header">
-        <button class="header-button" onclick="window.location.href='/';">File Converter</button>
-        <h1>Конвертация PDF в DOCX</h1>
+        <button class="header-button" onclick="window.location.href='/';">Format Converter</button>
+        <h1>Конвертация JPG в PNG</h1>
     </header>
 
     <main class="content">
         <div class="file-upload-container">
-            <form id="uploadForm" action="/convert-pdf-to-docx" method="post" enctype="multipart/form-data">
-                <div id="fileDropZone" class="file-drop-zone" data-allowed-extensions=".pdf">
+            <form id="uploadForm" action="/convert-jpg-to-png" method="post" enctype="multipart/form-data">
+                <div id="fileDropZone" class="file-drop-zone" data-allowed-extensions=".jpg, .jpeg">
                     <p>Перетащите файлы сюда или нажмите, чтобы выбрать</p>
-                    <input type="file" id="fileInput" name="files" multiple hidden data-allowed-extensions=".pdf">
+                    <input type="file" id="fileInput" name="files" multiple hidden data-allowed-extensions=".jpg, .jpeg">
                 </div>
                 <ul id="fileList" class="file-list"></ul>
             </form>          
         </div>
 
         <div class="side-panel" id="actionPanel">
-            <button type="submit" form="uploadForm" id="convertButton" style="display:none;">Конвертация в DOCX</button>
+            <button type="submit" form="uploadForm" id="convertButton" style="display:none;">Конвертация в PNG</button>
         </div>
     </main>
 
@@ -33,6 +33,6 @@
     </footer>
 
     <script src="/static/file-handler.js"></script>
-    
+
 </body>
 </html>

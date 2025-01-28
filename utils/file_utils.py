@@ -1,28 +1,48 @@
 import os
-import time
-import shutil
-from threading import Timer
+import re
+import uuid
+from flask import session
 
-def clear_old_user_folders(base_folder, max_age_seconds=30):
-    current_time = time.time()
-    for folder_name in os.listdir(base_folder):
-        folder_path = os.path.join(base_folder, folder_name)
-        if os.path.isdir(folder_path):
-            last_modified = os.path.getmtime(folder_path)
-            if current_time - last_modified > max_age_seconds:
-                try:
-                    shutil.rmtree(folder_path)
-                except Exception as e:
-                    print(f"Error deleting folder {folder_path}: {e}")
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'docx', 'pdf', 'jpg', 'jpeg', 'png', 'ppt', 'pptx'}
 
-def clear_upload_folder(folder_path):
-    for filename in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, filename)
-        try:
-            if os.path.isfile(file_path):
-                os.unlink(file_path)
-        except Exception as e:
-            print(f"Error deleting file {file_path}: {e}")
 
-def delayed_clear_uploads(folder_path, delay=10):
-    Timer(delay, clear_upload_folder, [folder_path]).start()
+# Проверка допустимых форматов
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# Генерация безопасного имени файла
+def secure_filename_custom(filename):
+    return re.sub(r'[^а-яА-Яa-zA-Z0-9_.-]', '_', filename)
+
+
+# Получение уникальной папки пользователя
+def get_user_folder():
+    session_id = session.get('session_id')
+    if not session_id:
+        session_id = str(uuid.uuid4())
+        session['session_id'] = session_id
+    user_folder = os.path.join(UPLOAD_FOLDER, session_id)
+    if not os.path.exists(user_folder):
+        os.makedirs(user_folder)
+    return user_folder
+
+
+# Загрузка файлов
+def handle_uploaded_files(uploaded_files, user_folder):
+    file_paths = []
+    for file in uploaded_files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename_custom(file.filename)
+            path = os.path.join(user_folder, filename)
+            file.save(path)
+            file_paths.append(path)
+    return file_paths
+
+
+# Удаление оригинальных файлов после конвертации
+def delete_original_files(file_paths):
+    for file_path in file_paths:
+        if os.path.exists(file_path):
+            os.remove(file_path)

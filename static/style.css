@@ -1,3 +1,4 @@
+/* Основные настройки */
 body, html {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -7,6 +8,7 @@ body, html {
     flex-direction: column;
 }
 
+/* Центрирование основного контента */
 .container {
     width: 80%;
     margin: 0 auto;
@@ -14,6 +16,7 @@ body, html {
     flex-grow: 1;
 }
 
+/* Заголовок */
 .main-header {
     background-color: #0073e6;
     color: white;
@@ -31,8 +34,9 @@ body, html {
     font-size: 1.2em;
 }
 
+/* Контент */
 .content {
-    padding: 0 40px;
+    padding: 0 20px;
     display: flex;
     position: relative;
     flex-direction: column;
@@ -44,34 +48,26 @@ body, html {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     padding: 20px;
-    margin-top: 30px;
-    width: 100%;
-    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-.card-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
+/* Карточки */
 .card {
+    position: relative;
     display: block;
-    text-decoration: none;
-    background: white;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.40);
+    text-decoration: none;
     color: #333;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
 }
 
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.65);
-}
-
-.card-content {
-    text-align: center;
 }
 
 .card h2 {
@@ -84,6 +80,40 @@ body, html {
     color: #666;
 }
 
+/* Подсказка тестовой функции */
+.test-feature-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.test-feature-icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 30px;
+    right: -20px;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Футер */
 .main-footer {
     background: #333;
     color: white;
@@ -92,100 +122,13 @@ body, html {
     margin-top: auto;
 }
 
-.converter-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin: 40px auto;
-    max-width: 600px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.upload-label {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-input[type="file"] {
-    padding: 10px;
-    margin-bottom: 20px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.file-input-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-#file {
-    display: none;
-}
-
-button.submit-btn {
-    display: none;
-}
-
-#uploadButton {
-    font-size: 18px;
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-#uploadSection {
-    margin-top: 50px;
-}
-
-#fileSection {
-    margin-top: 30px;
-}
-
-.file-list {
-    margin-bottom: 20px;
-}
-
-.file-item {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-#addFileButton, #convertButton {
-    padding: 15px 20px;
-    background: #0073e6;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    display: inline-block;
-    font-size: 20px;
-}
-
-#addFileButton:hover, #convertButton:hover {
-    background: #005bb5;
-}
-
+/* Зона загрузки файлов */
 .file-drop-zone {
-    border: 2px dashed #0073e6;
+    max-width: 500px;
     padding: 20px;
+    border: 2px dashed #0073e6;
     text-align: center;
-    color: #666;
-    margin-bottom: 20px;
+    cursor: pointer;
     transition: background-color 0.2s;
 }
 
@@ -193,8 +136,36 @@ button.submit-btn {
     background-color: #e6f7ff;
 }
 
-.hidden {
-    display: none;
+.file-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Кнопки */
+button {
+    padding: 10px 20px;
+    background: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #005bb5;
+}
+
+.remove-file-button {
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    line-height: 24px;
+    margin-right: 10px;
+    padding: 0px;
+    font-size: 12px;
 }
 
 .header-button {
@@ -204,15 +175,22 @@ button.submit-btn {
     padding: 15px 20px;
     background-color: #fff;
     color: #0056b3;
-    border: none;
-    border-radius: 5px;
     font-size: 20px;
-    cursor: pointer;
 }
 
 .header-button:hover {
     background-color: #0056b3;
     color: #fff;
+}
+
+.side-panel button {
+    padding: 15px 20px;
+    font-size: 20px;
+}
+
+.download-button {
+    padding: 15px 145px;
+    font-size: 20px;
 }
 
 .file-upload-container {
@@ -221,8 +199,7 @@ button.submit-btn {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 20px;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .side-panel {
@@ -239,32 +216,6 @@ button.submit-btn {
     gap: 10px;
 }
 
-.side-panel button {
-    padding: 10px 20px;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#convertButton {
-    display: none;
-}
-
-.file-drop-zone {
-    width: 100%;
-    max-width: 500px;
-    padding: 20px;
-    border: 2px dashed #ccc;
-    text-align: center;
-    cursor: pointer;
-}
-
-.file-drop-zone.dragover {
-    border-color: #333;
-}
-
 .center-content {
     display: flex;
     flex-direction: column;
@@ -272,40 +223,4 @@ button.submit-btn {
     justify-content: center;
     height: 100%;
     text-align: center;
-}
-
-.download-button {
-    padding: 15px 110px;
-    background: #0073e6;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.download-button:hover {
-    background: #005bb5;
-}
-
-.remove-file-button {
-    background: #0073e6;
-    border: none;
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-.remove-file-button:hover {
-    background: #005bb5;
-}
-
-.file-item {
-    display: flex;
-    align-items: center;
 }
