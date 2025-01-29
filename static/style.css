@@ -45,20 +45,23 @@ body, html {
 
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 20px;
     padding: 20px;
     margin-top: 25px;
     margin-bottom: 25px;
+    align-items: stretch; /* Растягиваем карточки по высоте */
 }
 
 /* Карточки */
 .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
-    display: block;
+    text-decoration: none;
     border-radius: 8px;
     padding: 20px;
-    text-decoration: none;
     color: #333;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     transition: transform 0.2s, box-shadow 0.2s;
@@ -78,6 +81,8 @@ body, html {
 .card p {
     font-size: 1em;
     color: #666;
+    text-align: center;
+    padding: 0 25px;
 }
 
 /* Подсказка тестовой функции */
@@ -124,12 +129,17 @@ body, html {
 
 /* Зона загрузки файлов */
 .file-drop-zone {
-    max-width: 500px;
+    /* max-width: 500px; */
+    width: 500px;
+    height: 100px;
     padding: 20px;
     border: 2px dashed #0073e6;
-    text-align: center;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .file-drop-zone.dragover {

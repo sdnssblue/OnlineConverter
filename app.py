@@ -9,6 +9,8 @@ from converters.pdf_to_docx import convert_pdf_to_docx
 from converters.ppt_to_pdf import convert_ppt_to_pdf
 from converters.jpg_to_png import convert_jpg_to_png
 from converters.png_to_jpg import convert_png_to_jpg
+from converters.pdf_to_jpg import convert_pdf_to_jpg
+
 from utils.file_utils import (
     get_user_folder,
     handle_uploaded_files,
@@ -108,6 +110,21 @@ def png_to_jpg_page():
     return render_template('png_to_jpg.html')
 
 
+@app.route('/convert-pdf-to-jpg', methods=['GET', 'POST'])
+def pdf_to_jpg_page():
+    user_folder = get_user_folder()
+    if request.method == 'POST':
+        uploaded_files = request.files.getlist('files')
+        pdf_paths = handle_uploaded_files(uploaded_files, user_folder)
+        jpg_paths = convert_pdf_to_jpg(pdf_paths)
+        delete_original_files(pdf_paths)
+        
+        if jpg_paths:
+            return render_template('download.html', files=jpg_paths)
+    
+    return render_template('pdf_to_jpg.html')
+
+
 @app.route('/uploads/<filename>')
 def download_file(filename):
     user_folder = get_user_folder()
@@ -123,15 +140,29 @@ def download_file(filename):
 def download_all():
     user_folder = get_user_folder()
     files = os.listdir(user_folder)
+
     if len(files) == 1:
         file_path = os.path.join(user_folder, files[0])
+
+        # Если это папка, архивируем перед отправкой
+        if os.path.isdir(file_path):
+            zip_path = file_path + ".zip"
+            shutil.make_archive(file_path, 'zip', file_path)
+            return send_file(zip_path, as_attachment=True, download_name=os.path.basename(zip_path))
+
         return send_file(file_path, as_attachment=True)
+
+    # Если файлов несколько, создаём ZIP-архив
     temp_zip = tempfile.NamedTemporaryFile(delete=False, suffix=".zip")
     with zipfile.ZipFile(temp_zip.name, 'w') as zipf:
         for filename in files:
             file_path = os.path.join(user_folder, filename)
             if os.path.isfile(file_path):
                 zipf.write(file_path, arcname=filename)
+            elif os.path.isdir(file_path):
+                shutil.make_archive(file_path, 'zip', file_path)
+                zipf.write(file_path + ".zip", arcname=os.path.basename(file_path) + ".zip")
+
     return send_file(temp_zip.name, as_attachment=True, download_name='converted_files.zip')
 
 
